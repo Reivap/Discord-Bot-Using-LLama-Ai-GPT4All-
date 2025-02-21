@@ -2,7 +2,7 @@
 
 
 **Steps**
-
+--------------------------
 **1) Install Dependancies**
 --------------------------
 - pip install discord.py
