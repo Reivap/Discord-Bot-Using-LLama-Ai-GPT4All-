@@ -13,6 +13,7 @@ Steps
 
 
 **3) Usage**
+
  !chat <message>
 - For single response message without previous context
 
