@@ -1,7 +1,8 @@
 # Discord-Bot-Using-LLama-Ai-GPT4All-
 
 
-Steps
+**Steps**
+
 **1) Install Dependancies**
 --------------------------
 - pip install discord.py
