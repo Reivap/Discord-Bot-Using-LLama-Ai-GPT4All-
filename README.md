@@ -51,4 +51,4 @@
   - Bot: Your chat context has been cleared.
 
   User: !stop
-  Bot: Bot is stopping. Goodbye!
+  - Bot: Bot is stopping. Goodbye!
