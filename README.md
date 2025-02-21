@@ -14,7 +14,7 @@ Steps
 
 **3) Usage**
 
- !chat <message>
+ !chat < message >
 - For single response message without previous context
 
  !chatc <context length(int)> <message> 
