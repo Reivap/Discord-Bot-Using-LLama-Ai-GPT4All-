@@ -27,6 +27,7 @@
 - To clear the bot
 
  !stop
+ 
 -Stop the bot
 
 
