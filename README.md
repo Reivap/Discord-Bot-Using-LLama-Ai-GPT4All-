@@ -2,15 +2,17 @@
 
 
 Steps
-1) Install Dependancies
+**1) Install Dependancies**
 - pip install discord.py
 - pip install gpt4all
 - pip install gpt4all[cuda]      # To fix library errors
 
-2) Run the bot
+**2) Run the bot**
 - Replace token with your bot's token
 
-3) Usage
+
+
+**3) Usage**
  !chat <message>
 - For single response message without previous context
 
@@ -23,7 +25,8 @@ Steps
  !stop
 -Stop the bot
 
-4) Examples
+
+**4) Examples**
   User: !chat What is the capital of France?
   Bot: The capital of France is Paris.
   
