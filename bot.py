@@ -29,7 +29,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 user_cooldown = commands.CooldownMapping.from_cooldown(1, 60, commands.BucketType.user)  # 1 command per 60 seconds per user
 
 # Contextual memory: Store chat context for each user/channel
-user_context = defaultdict(lambda: deque(maxlen=5))  # Stores the last 5 messages per user
+user_context = defaultdict(lambda: deque(maxlen=10))  # Store more context (last 10 messages)
 
 @bot.event
 async def on_ready():
@@ -45,6 +45,14 @@ async def update_progress(message: discord.Message, progress: int):
     except Exception as e:
         logger.error(f"Error updating progress: {e}")
 
+async def send_large_message(ctx, content: str):
+    """
+    Send a large message by breaking it into chunks.
+    """
+    chunk_size = 2000  # Max message size in Discord
+    for i in range(0, len(content), chunk_size):
+        await ctx.send(content[i:i + chunk_size])
+
 @bot.command(name='chat')
 async def chat(ctx, *, message: str):
     """
@@ -53,8 +61,6 @@ async def chat(ctx, *, message: str):
     Example: !chat Hello
     """
     try:
-
-
         # Check if the model is loaded
         if not model:
             await ctx.send("The AI model is not ready. Please try again later.")
@@ -70,10 +76,11 @@ async def chat(ctx, *, message: str):
             for progress in progress_steps:
                 await asyncio.sleep(1)  # Adjust the delay to control the speed of progress
                 await update_progress(progress_message, progress)
-            response = model.generate(message, max_tokens=2048)
-        
-        # Send the final response
-        await progress_message.edit(content=response)
+            response = model.generate(message, max_tokens=20480)
+
+        # Send the response (handles large responses)
+        await send_large_message(ctx, response)
+        await progress_message.delete()  # Optionally delete the progress message
     except Exception as e:
         logger.error(f"Error in chat command: {e}")
         await ctx.send(f"An error occurred: {e}")
@@ -125,12 +132,13 @@ async def chatc(ctx, context_length: int = 3, *, message: str = None):
                 await asyncio.sleep(1)  # Adjust the delay to control the speed of progress
                 await update_progress(progress_message, progress)
                 response = model.generate(prompt, max_tokens=2048)
-        
+
         # Add the AI's response to the context
         context.append(f"AI: {response}")
 
-        # Send the final response
-        await progress_message.edit(content=response)
+        # Send the final response (handles large responses)
+        await send_large_message(ctx, response)
+        await progress_message.delete()  # Optionally delete the progress message
     except Exception as e:
         logger.error(f"Error in chatc command: {e}")
         await ctx.send(f"An error occurred: {e}")
@@ -162,4 +170,4 @@ async def stop(ctx):
 
 # Run the bot
 if __name__ == "__main__":
-    bot.run('Enter_BOT_TOKEN')  # Replace with your bot token
+    bot.run('token')  # Replace with your bot token
