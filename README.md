@@ -3,21 +3,23 @@
 
 Steps
 **1) Install Dependancies**
+--------------------------
 - pip install discord.py
 - pip install gpt4all
 - pip install gpt4all[cuda]      # To fix library errors
 
 **2) Run the bot**
+--------------------------
 - Replace token with your bot's token
 
 
 
 **3) Usage**
-
+--------------------------
  !chat < message >
 - For single response message without previous context
 
- !chatc <context length(int)> <message> 
+ !chatc <context length(int)> < message > 
 - Indicate the context length for the bot to load previous no of message into context.
 
  !clear
@@ -28,6 +30,7 @@ Steps
 
 
 **4) Examples**
+--------------------------
   User: !chat What is the capital of France?
   Bot: The capital of France is Paris.
   
